@@ -3,6 +3,13 @@
   hosts: all
   become: true
 
+  pre_tasks:
+    - name: Обновить кэш apt
+      ansible.builtin.apt:
+        update_cache: true
+      changed_when: false
+      tags: [setup]
+
   roles:
     - role: geerlingguy.pip
       tags: [setup]
