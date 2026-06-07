@@ -1,5 +1,5 @@
 ---
-- name: Подготовка серверов и деплой Redmine
+- name: Подготовка серверов
   hosts: all
   become: true
 
@@ -15,6 +15,10 @@
       tags: [setup]
     - role: geerlingguy.docker
       tags: [setup]
+
+- name: Деплой приложения Redmine
+  hosts: webservers
+  become: true
 
   tasks:
     - name: Создать каталог приложения

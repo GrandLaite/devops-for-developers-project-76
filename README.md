@@ -2,7 +2,6 @@
 
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/GrandLaite/devops-for-developers-project-76/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/GrandLaite/devops-for-developers-project-76/actions)
-![CI](https://github.com/GrandLaite/devops-for-developers-project-76/actions/workflows/ci.yml/badge.svg)
 
 Деплой приложения в Yandex Cloud, БД PostgreSQL и мониторинг через Datadog.
 
@@ -54,7 +53,7 @@ make lint
 
 ```
 .
-├── .github/workflows/ci.yml
+├── .github/workflows/hexlet-check.yml
 ├── ansible.cfg
 ├── inventory.ini
 ├── playbook.yml
