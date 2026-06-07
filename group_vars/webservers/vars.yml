@@ -1,0 +1,23 @@
+---
+redmine_image: redmine:6.1
+redmine_container_name: redmine
+redmine_port: 3000
+
+redmine_db_host: rc1b-aqlnti93r9h6gbfn.mdb.yandexcloud.net
+redmine_db_port: 6432
+redmine_db_name: appdb
+redmine_db_user: appuser
+redmine_db_sslmode: require
+
+redmine_db_password: "{{ vault_redmine_db_password }}"
+redmine_secret_key_base: "{{ vault_redmine_secret_key_base }}"
+
+datadog_api_key: "{{ vault_datadog_api_key }}"
+datadog_site: "datadoghq.eu"
+datadog_checks:
+  http_check:
+    init_config:
+    instances:
+      - name: Redmine
+        url: "http://localhost:{{ redmine_port }}"
+        timeout: 5

@@ -1,0 +1,4 @@
+.vault_pass.txt
+*.retry
+__pycache__/
+.DS_Store

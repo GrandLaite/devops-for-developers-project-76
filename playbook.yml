@@ -1,0 +1,45 @@
+---
+- name: Подготовка серверов и деплой Redmine
+  hosts: all
+  become: true
+
+  roles:
+    - role: geerlingguy.pip
+      tags: [setup]
+    - role: geerlingguy.docker
+      tags: [setup]
+
+  tasks:
+    - name: Создать каталог приложения
+      ansible.builtin.file:
+        path: /opt/redmine
+        state: directory
+        mode: "0750"
+      tags: [deploy]
+
+    - name: Сгенерировать .env для контейнера из шаблона
+      ansible.builtin.template:
+        src: redmine.env.j2
+        dest: /opt/redmine/.env
+        mode: "0600"
+      tags: [deploy]
+
+    - name: Запустить контейнер Redmine
+      community.docker.docker_container:
+        name: "{{ redmine_container_name }}"
+        image: "{{ redmine_image }}"
+        state: started
+        pull: true
+        restart_policy: unless-stopped
+        env_file: /opt/redmine/.env
+        published_ports:
+          - "{{ redmine_port }}:3000"
+      tags: [deploy]
+
+- name: Установка агента Datadog
+  hosts: webservers
+  become: true
+
+  roles:
+    - role: datadog.datadog
+      tags: [setup, monitoring]
